@@ -1,10 +1,3 @@
-# DEPTHBOOT HAS BEEN DISCONTINUED
-
-Please use the [depthcharge-boot guide](https://github.com/eupnea-linux-backup/depthcharge-guide/) instead.
-
-<details>
-<summary>View the old readme</summary>
-
 # Depthboot: your **Chromebook**, your way
 
 Choose between a variety of common Linux distributions and desktop environments to create a bootable image for any
