@@ -73,9 +73,9 @@ def exit_handler():
 
 
 if __name__ == "__main__":
-    print_error("THIS SCRIPT IS NOT MAINTAINED ANYMORE. IT WILL PRODUCE OUTDATED AND/OR BROKEN IMAGES.")
-    print_question("Use this guide instead: https://github.com/eupnea-linux-backup/depthcharge-guide")
-    exit(1)
+    # print_error("THIS SCRIPT IS NOT MAINTAINED ANYMORE. IT WILL PRODUCE OUTDATED AND/OR BROKEN IMAGES.")
+    # print_question("Use this guide instead: https://github.com/eupnea-linux-backup/depthcharge-guide")
+    # exit(1)
 
     # override sys.exit to catch exit codes
     hooks = ExitHooks()
