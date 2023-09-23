@@ -171,7 +171,7 @@ jobs:
 
           # Optional. Commit message for the created commit.
           # Defaults to "Apply automatic changes"
-          commit_message: Update os_sizes.json
+          commit_message: chore: update os_sizes.json
 
           # Optional glob pattern of files which should be added to the commit
           # Defaults to all (.)
@@ -184,7 +184,7 @@ jobs:
         # Check if the results are not empty and fail the whole workflow if they are
         run: |
           for file in ./results_*/*_results.txt
-          do 
+          do
             if [ "$(cat $file)" == "0" ]
               then
                 echo $file >> ./failed_results.txt
