@@ -539,11 +539,16 @@ def start_build(build_options: dict, args: argparse.Namespace) -> None:
         input("\033[92m" + "Press Enter to continue" + "\033[0m")
 
     if build_options["device"] == "image":
+        bash(f"losetup -d {img_mnt}")  # unmount image from loop device
         try:
             with open("/sys/devices/virtual/dmi/id/product_name", "r") as file:
                 product_name = file.read().strip()
         except FileNotFoundError:  # WSL doesnt have dmi data
             product_name = ""
+        if not product_name:
+            bash("mv ./depthboot.img ./depthboot.iso")
+            print_header(f"The ready-to-boot {build_options['distro_name'].capitalize()} Depthboot image is located at "
+                         f"{get_full_path('.')}/depthboot.iso")
         # TODO: Fix shrinking on Crostini
         if product_name != "crosvm" and not args.no_shrink:
             # Shrink image to actual size
@@ -557,13 +562,13 @@ def start_build(build_options: dict, args: argparse.Namespace) -> None:
             actual_fs_in_bytes += 134217728
             actual_fs_in_bytes += 20971520  # add 20mb for linux to be able to boot properly
             bash(f"truncate --size={actual_fs_in_bytes} ./depthboot.img")
+            print_header(f"The ready-to-boot {build_options['distro_name'].capitalize()} Depthboot image is located at "
+                         f"{get_full_path('.')}/depthboot.img")
         if product_name == "crosvm":
             # rename the image to .bin for the chromeos recovery utility to be able to flash it
             bash("mv ./depthboot.img ./depthboot.bin")
-
-        bash(f"losetup -d {img_mnt}")  # unmount image from loop device
-        print_header(f"The ready-to-boot {build_options['distro_name'].capitalize()} Depthboot image is located at "
-                     f"{get_full_path('.')}/depthboot.img")
+            print_header(f"The ready-to-boot {build_options['distro_name'].capitalize()} Depthboot image is located at "
+                                 f"{get_full_path('.')}/depthboot.bin")
     else:
         print_header(f"USB/SD-card is ready to boot {build_options['distro_name'].capitalize()}")
         print_header("It is safe to remove the USB-drive/SD-card now.")
