@@ -51,12 +51,12 @@ def download_rootfs(distro_name: str, distro_version: str) -> None:
                 download_file("https://geo.mirror.pkgbuild.com/iso/latest/archlinux-bootstrap-x86_64.tar.gz",
                               "/tmp/depthboot-build/arch-rootfs.tar.gz")
             case "ubuntu" | "fedora":
-                print_status(f"Downloading {distro_name.capitalize()} rootfs, version {distro_version} from eupnea github releases")
+                print_status(f"Downloading {distro_name.capitalize()} rootfs, version {distro_version} from Eupnea GitHub releases")
                 download_file(f"https://github.com/eupnea-linux/{distro_name}-rootfs/releases/latest/download/"
                               f"{distro_name}-rootfs-{distro_version}.tar.xz",
                               f"/tmp/depthboot-build/{distro_name}-rootfs.tar.xz")
             case "pop-os":
-                print_status("Downloading Pop!_OS rootfs from eupnea github releases")
+                print_status("Downloading Pop!_OS rootfs from Eupnea GitHub")
                 download_file("https://github.com/eupnea-linux/pop-os-rootfs/releases/latest/download/pop-os-rootfs-"
                               "22.04.split.aa", "/tmp/depthboot-build/pop-os-rootfs.split.aa")
                 # print_status("Downloading pop-os rootfs from eupnea GitHub releases, part 2/2")
