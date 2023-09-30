@@ -1,8 +1,8 @@
 ---
 name: Audio issue
 about: Please create audio issues in the audio-scripts repo!
-title: "[AUDIO]"
-labels: ''
+title: "[AUDIO] "
+labels: 'wontfix'
 assignees: ''
 
 ---

@@ -371,6 +371,8 @@ def print_question(message: str) -> None:
 def print_header(message: str) -> None:
     print("\033[95m" + message + "\033[0m", flush=True)
 
+def print_input(message: str) -> None:
+    input("\033[92m" + message + "\033[0m")
 
 verbose = False
 # on import check if pv is installed and set global variable
