@@ -189,7 +189,7 @@ if __name__ == "__main__":
     print_status("Checking if local script is up to date")
     try:
         if not args.skip_commit_check and bash("git rev-parse HEAD") != bash("git ls-remote origin HEAD").split("\t")[0]:
-            user_answer = input("\033[92m" + "You are not running the latest version of the script. Update now? (Y/n)" + "\033[0m").lower()         
+            user_answer = input("\033[92m" + "You are not running the latest version of the script. Update now? (Y/n)" + "\033[0m").lower()
             if user_answer in ["y", ""]:
                 print_status("Updating the script...")
                 bash("git pull")
@@ -260,7 +260,7 @@ if __name__ == "__main__":
         print("Failed to unmount /mnt/depthboot, ignore")
     rmdir("/mnt/depthboot")
 
-    rmfile("depthboot.img")
+    rmfile("depthboot.iso")
     rmfile("kernel.flags")
     rmfile(".stop_download_progress")
 
