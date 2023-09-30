@@ -132,7 +132,7 @@ if __name__ == "__main__":
                 bash("zypper --non-interactive refresh")  # sync repos
                 bash("zypper --non-interactive install vboot parted pv xz")  # cgpt is included in vboot-utils on fedora
             elif distro.lower().__contains__("fedora"):
-                bash("dnf update -y")  # sync repos
+                bash("dnf update --refresh -y")  # sync repos
                 bash("dnf install -y vboot-utils parted pv xz")  # cgpt is included in vboot-utils on fedora
             else:
                 print_warning("Script dependencies not found, please install the following packages with your package "
