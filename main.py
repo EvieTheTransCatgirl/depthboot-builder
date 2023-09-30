@@ -142,7 +142,7 @@ if __name__ == "__main__":
         print_warning("Skipping dependency check")
 
     # Check python version
-    print_status("Checking python version")
+    print_status("Checking Python version...")
     if sys.version_info < (3, 10):  # python 3.10 or higher is required
         # Check if running under crostini and ask user to update python
         # Do not give this option on regular systems, as it may break the system
@@ -166,7 +166,7 @@ if __name__ == "__main__":
                     file.writelines(sources)
 
                 # update and install python
-                print_status("Installing python 3.10")
+                print_status("Installing Python 3.10")
                 bash("apt-get update -y")
                 bash("apt-get install -y python3")
                 print_status("Python 3.10 installed")
@@ -188,10 +188,15 @@ if __name__ == "__main__":
     # check if running the latest version fo the script
     print_status("Checking if local script is up to date")
     try:
-        if not args.skip_commit_check and \
-                bash("git rev-parse HEAD") != bash("git ls-remote origin HEAD").split("\t")[0]:
-            print_error("You are not running the latest version of the script. Please update with 'git pull'")
-            print_status("If you are a developer, you can skip this with the '--skip-commit-check' flag")
+        if not args.skip_commit_check and bash("git rev-parse HEAD") != bash("git ls-remote origin HEAD").split("\t")[0]:
+            user_answer = input("\033[92m" + "You are not running the latest version of the script. Update now? (Y/n)" + "\033[0m").lower()         
+            if user_answer in ["y", ""]:
+                print_status("Updating the script...")
+                bash("git pull")
+                print_header('Please restart the script with: "./main.py"')
+                sys.exit(0)
+            print_error("Please update the script before continuing.")
+            print_status("If you are a developer, you can skip this check with the '--skip-commit-check' flag")
             sys.exit(1)
     except subprocess.CalledProcessError:
         print_error("Failed to check if script is up to date.")
