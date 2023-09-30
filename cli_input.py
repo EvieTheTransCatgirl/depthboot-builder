@@ -182,7 +182,7 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
 
         else:
             passwd_temp_repeat = getpass("\033[94m" + "Repeat password: " + "\033[0m")
-            if passwd_temp == passwd_temp_repeat:
+            if passwd_temp === passwd_temp_repeat:
                 output_dict["password"] = passwd_temp
                 print("Password set")
                 break
