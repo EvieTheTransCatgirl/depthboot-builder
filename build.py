@@ -74,14 +74,14 @@ def download_rootfs(distro_name: str, distro_version: str) -> None:
 def prepare_img(img_size: int) -> bool:
     print_status("Preparing image")
     try:
-        bash(f"fallocate -l {img_size}G depthboot.iso")
+        bash(f"fallocate -l {img_size}G depthboot.img")
     except subprocess.CalledProcessError:  # try fallocate, if it fails use dd
-        bash(f"dd if=/dev/zero of=depthboot.iso status=progress bs=1024 count={img_size * 1000000}")
+        bash(f"dd if=/dev/zero of=depthboot.img status=progress bs=1024 count={img_size * 1000000}")
 
     print_status("Mounting empty image")
     global img_mnt
     try:
-        img_mnt = bash("losetup -f --show depthboot.iso")
+        img_mnt = bash("losetup -f --show depthboot.img")
     except subprocess.CalledProcessError as e:
         if not bash("systemd-detect-virt").lower().__contains__("wsl"):  # if not running WSL, the error is unexpected
             raise e
@@ -556,12 +556,12 @@ def start_build(build_options: dict, args: argparse.Namespace) -> None:
             # There are 2 kernel partitions -> 67108864 bytes * 2 = 134217728 bytes
             actual_fs_in_bytes += 134217728
             actual_fs_in_bytes += 20971520  # add 20mb for linux to be able to boot properly
-            bash(f"truncate --size={actual_fs_in_bytes} ./depthboot.iso")
+            bash(f"truncate --size={actual_fs_in_bytes} ./depthboot.img")
             print_header(f"The ready-to-boot {build_options['distro_name'].capitalize()} Depthboot image is located at "
-                             f"{get_full_path('.')}/depthboot.iso")
+                             f"{get_full_path('.')}/depthboot.img")
         if product_name == "crosvm":
             # rename the image to .bin for the chromeos recovery utility to be able to flash it
-            bash("mv ./depthboot.iso ./depthboot.bin")
+            bash("mv ./depthboot.img ./depthboot.bin")
             print_header(f"The ready-to-boot {build_options['distro_name'].capitalize()} Depthboot image is located at "
                                  f"{get_full_path('.')}/depthboot.bin")
         bash(f"losetup -d {img_mnt}")  # unmount image from loop device

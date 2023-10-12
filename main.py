@@ -260,7 +260,7 @@ if __name__ == "__main__":
         print("Failed to unmount /mnt/depthboot, ignore")
     rmdir("/mnt/depthboot")
 
-    rmfile("depthboot.iso")
+    rmfile("depthboot.img")
     rmfile("kernel.flags")
     rmfile(".stop_download_progress")
 
