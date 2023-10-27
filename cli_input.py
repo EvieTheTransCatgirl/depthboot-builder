@@ -45,8 +45,8 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
             case "Ubuntu":
                 output_dict["distro_name"] = "ubuntu"
                 output_dict["distro_version"] = ia_selection("Which Ubuntu version would you like to use?",
-                                                             options=["23.04", "22.04"], flags=[
-                        f"{os_sizes['ubuntu_23.04']['cli']}GB (latest, recommended)",
+                                                             options=["23.04", "23.10"], flags=[
+                        f"{os_sizes['ubuntu_23.10']['cli']}GB (latest, recommended)",
                         f"{os_sizes['ubuntu_22.04']['cli']}GB (LTS version)"])
                 break
             case "Linux Mint (Cinnamon edition)":
