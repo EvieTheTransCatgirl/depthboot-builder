@@ -13,5 +13,5 @@ jobs:
         with:
           close-reason: not_planned
           comment: |
-            Please post audio issues in [audio-scripts](https://github.com/eupnea-linux/audio-scripts) repository.
+            Please post audio issues in [audio-scripts](https://github.com/eupnea-project/audio-scripts) repository.
             Auto-closing this issue.

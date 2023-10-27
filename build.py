@@ -52,15 +52,15 @@ def download_rootfs(distro_name: str, distro_version: str) -> None:
                               "/tmp/depthboot-build/arch-rootfs.tar.gz")
             case "ubuntu" | "fedora":
                 print_status(f"Downloading {distro_name.capitalize()} rootfs, version {distro_version} from Eupnea GitHub releases")
-                download_file(f"https://github.com/eupnea-linux/{distro_name}-rootfs/releases/latest/download/"
+                download_file(f"https://github.com/eupnea-project/{distro_name}-rootfs/releases/latest/download/"
                               f"{distro_name}-rootfs-{distro_version}.tar.xz",
                               f"/tmp/depthboot-build/{distro_name}-rootfs.tar.xz")
             case "pop-os":
                 print_status("Downloading Pop!_OS rootfs from Eupnea GitHub")
-                download_file("https://github.com/eupnea-linux/pop-os-rootfs/releases/latest/download/pop-os-rootfs-"
+                download_file("https://github.com/eupnea-project/pop-os-rootfs/releases/latest/download/pop-os-rootfs-"
                               "22.04.split.aa", "/tmp/depthboot-build/pop-os-rootfs.split.aa")
                 # print_status("Downloading pop-os rootfs from eupnea GitHub releases, part 2/2")
-                # download_file("https://github.com/eupnea-linux/pop-os-rootfs/releases/latest/download/pop-os-rootfs"
+                # download_file("https://github.com/eupnea-project/pop-os-rootfs/releases/latest/download/pop-os-rootfs"
                 #              "-22.04.split.ab", "/tmp/depthboot-build/pop-os-rootfs.split.ab")
                 print_status("Combining split Pop!_OS rootfs, might take a while")
                 bash("cat /tmp/depthboot-build/pop-os-rootfs.split.?? > /tmp/depthboot-build/pop-os-rootfs.tar.xz")

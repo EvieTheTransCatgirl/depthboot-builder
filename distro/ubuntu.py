@@ -14,7 +14,8 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
         "21.04": "hirsute",
         "22.04": "jammy",
         "22.10": "kinetic",
-        "23.04": "lunar"
+        "23.04": "lunar",
+        "23.10": "mantic"
     }
     # add missing apt sources
     with open("/mnt/depthboot/etc/apt/sources.list", "a") as file:
@@ -29,10 +30,10 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
     # Add eupnea repo
     mkdir("/mnt/depthboot/usr/local/share/keyrings", create_parents=True)
     # download public key
-    urlretrieve("https://eupnea-linux.github.io/apt-repo/public.key",
+    urlretrieve("https://eupnea-project.github.io/apt-repo/public.key",
                 filename="/mnt/depthboot/usr/local/share/keyrings/eupnea.key")
     with open("/mnt/depthboot/etc/apt/sources.list.d/eupnea.list", "w") as file:
-        file.write("deb [signed-by=/usr/local/share/keyrings/eupnea.key] https://eupnea-linux.github.io/"
+        file.write("deb [signed-by=/usr/local/share/keyrings/eupnea.key] https://eupnea-project.github.io/"
                    f"apt-repo/debian_ubuntu {ubuntu_versions_codenames[distro_version]} main")
     # update apt
     chroot("apt-get update -y")

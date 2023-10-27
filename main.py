@@ -74,7 +74,7 @@ def exit_handler():
 
 if __name__ == "__main__":
     # print_error("THIS SCRIPT IS NOT MAINTAINED ANYMORE. IT WILL PRODUCE OUTDATED AND/OR BROKEN IMAGES.")
-    # print_question("Use this guide instead: https://github.com/eupnea-linux-backup/depthcharge-guide")
+    # print_question("Use this guide instead: https://github.com/eupnea-project/depthcharge-guide")
     # exit(1)
 
     # override sys.exit to catch exit codes
@@ -116,7 +116,7 @@ if __name__ == "__main__":
                 bash("pacman -Sy")  # sync repos
                 # Download prepackaged cgpt + vboot from arch-repo releases as its not available in the official repos
                 # Makepkg is too much of a hassle to use here as it requires a non-root user
-                urlretrieve("https://github.com/eupnea-linux/arch-repo/releases/latest/download/cgpt-vboot"
+                urlretrieve("https://github.com/eupnea-project/arch-repo/releases/latest/download/cgpt-vboot"
                             "-utils.pkg.tar.gz", filename="/tmp/cgpt-vboot-utils.pkg.tar.gz")
                 # Install downloaded package
                 bash("pacman --noconfirm -U /tmp/cgpt-vboot-utils.pkg.tar.gz")
@@ -218,7 +218,7 @@ if __name__ == "__main__":
         except subprocess.CalledProcessError:
             print_error("Failed to prepare Crostini")
             print_error("Please run the Crostini specific instructions before running this script")
-            print("https://eupnea-linux.github.io/docs/extra/crostini")
+            print("https://eupnea-project.github.io/docs/extra/crostini")
             sys.exit(1)
 
     # clear terminal, but keep any previous output so the user can scroll up to see it

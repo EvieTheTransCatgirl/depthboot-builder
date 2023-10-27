@@ -1,11 +1,11 @@
 # Depthboot: your **Chromebook**, your way
 
 Choose between a variety of common Linux distributions and desktop environments to create a bootable image for any
-[supported](https://eupnea-linux.github.io/docs/project/supported-devices) 64-bit Chromebook, without modifying
+[supported](https://eupnea-project.github.io/docs/project/supported-devices) 64-bit Chromebook, without modifying
 firmware.
-<h1><a href="https://eupnea-linux.github.io/docs/depthboot/requirements">Get started here</a></h1>
+<h1><a href="https://eupnea-project.github.io/docs/depthboot/requirements">Get started here</a></h1>
 
-[Due to licensing restraints Depthboot cannot be distributed as an iso](https://eupnea-linux.github.io/faq#why-is-sharing-depthboot-images-illegal).
+[Due to licensing restraints Depthboot cannot be distributed as an iso](https://eupnea-project.github.io/faq#why-is-sharing-depthboot-images-illegal).
 Instead, it has to be built locally.
 
 ## Depthboot vs Mainline
@@ -25,9 +25,9 @@ Instead, it has to be built locally.
 * Hardware support matches ChromeOS.
 * Extensive audio support, with active development to bring further support.
 
-[Read more](https://eupnea-linux.github.io/docs/chromebook/firmware-comparison)
+[Read more](https://eupnea-project.github.io/docs/chromebook/firmware-comparison)
 
-## [Supported devices](https://eupnea-linux.github.io/docs/depthboot/supported-devices)
+## [Supported devices](https://eupnea-project.github.io/docs/depthboot/supported-devices)
 
 ## Credit
 

@@ -15,10 +15,10 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
     # Add eupnea repo
     mkdir("/mnt/depthboot/usr/local/share/keyrings", create_parents=True)
     # download public key
-    urlretrieve("https://eupnea-linux.github.io/apt-repo/public.key",
+    urlretrieve("https://eupnea-project.github.io/apt-repo/public.key",
                 filename="/mnt/depthboot/usr/local/share/keyrings/eupnea.key")
     with open("/mnt/depthboot/etc/apt/sources.list.d/eupnea.list", "w") as file:
-        file.write("deb [signed-by=/usr/local/share/keyrings/eupnea.key] https://eupnea-linux.github.io/"
+        file.write("deb [signed-by=/usr/local/share/keyrings/eupnea.key] https://eupnea-project.github.io/"
                    "apt-repo/debian_ubuntu jammy main")
     # update apt
     print_status("Updating and upgrading all packages")
