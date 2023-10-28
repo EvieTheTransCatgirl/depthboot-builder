@@ -65,18 +65,19 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
                 break
             case "Fedora":
                 output_dict["distro_name"] = "fedora"
-                output_dict["distro_version"] = ia_selection("Which Fedora version would you like to use?",
-                                                             options=["39", "40"],
-                                                             flags=[f"~{os_sizes['fedora_39']['cli']}GB "
-                                                                    f"(stable, recommended)",
-                                                                    f"~{os_sizes['fedora_40']['cli']}GB"
-                                                                    " (beta, unrecommended)"])
+                output_dict["distro_version"] = "39"
+                # output_dict["distro_version"] = ia_selection("Which Fedora version would you like to use?",
+                #                                             options=["39", "40"],
+                #                                             flags=[f"~{os_sizes['fedora_39']['cli']}GB "
+                #                                                    f"(stable, recommended)",
+                #                                                    f"~{os_sizes['fedora_40']['cli']}GB"
+                #                                                    " (beta, unrecommended)"])
                 break
             case "Pop!_OS":
                 output_dict["distro_name"] = "pop-os"
                 output_dict["distro_version"] = "22.04"
                 break
-            case "Generic ISO":
+                case "Generic ISO":
                 print_error("Please strongly consider using a supported distro, as generic ISO installs are not "
                             "optimized in any way. Generic installs will not get any kernel updates or Chromebook "
                             "specific fixes from the Eupnea team.")
