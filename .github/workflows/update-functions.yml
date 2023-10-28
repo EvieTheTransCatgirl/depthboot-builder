@@ -26,7 +26,7 @@ jobs:
 
           # Optional. Commit message for the created commit.
           # Defaults to "Apply automatic changes"
-          commit_message: chore: update functions.py
+          commit_message: "chore: update functions.py"
 
           # Optional glob pattern of files which should be added to the commit
           # Defaults to all (.)
