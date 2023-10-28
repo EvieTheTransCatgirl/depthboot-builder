@@ -77,7 +77,7 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
                 output_dict["distro_name"] = "pop-os"
                 output_dict["distro_version"] = "22.04"
                 break
-                case "Generic ISO":
+            case "Generic ISO":
                 print_error("Please strongly consider using a supported distro, as generic ISO installs are not "
                             "optimized in any way. Generic installs will not get any kernel updates or Chromebook "
                             "specific fixes from the Eupnea team.")
