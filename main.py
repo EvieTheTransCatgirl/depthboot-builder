@@ -122,6 +122,7 @@ if __name__ == "__main__":
 
     # check script dependencies are already installed with which
     if not args.no_deps_check:
+        print_status("Checking if script dependencies are installed...")
         try:
             bash("which pv xz parted cgpt futility")
             print_status("Dependencies already installed, skipping")
