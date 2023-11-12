@@ -85,6 +85,27 @@ if __name__ == "__main__":
         print_error("Dev builds are not supported currently")
         sys.exit(1)
 
+    # check if running the latest version of the script
+    print_status("Checking if local script is up to date")
+    try:
+        if (not args.skip_commit_check and
+                bash("git rev-parse HEAD") != bash("git ls-remote origin HEAD").split("\t")[0]):
+            user_answer = input("\033[92m" + "You are not running the latest version of the script. Update now? (Y/n)"
+                                + "\033[0m").lower()
+            if user_answer.lower() in ["y", ""]:
+                print_status("Updating the script...")
+                bash("git pull")
+                print_status("Restarting the script...")
+                os.execl(sys.executable, sys.executable, *sys.argv)
+            print_error("Please update the script before continuing.")
+            print_status("If you are a developer, you can skip this check with the '--skip-commit-check' flag")
+            sys.exit(1)
+    except subprocess.CalledProcessError:
+        print_error("Failed to check if script is up to date.")
+        print_status("If you are a developer, you can skip this with the '--skip-commit-check' flag. "
+                     "If you are not a developer, check your internet connection and try again.")
+        sys.exit(1)
+
     # Restart script as root
     if os.geteuid() != 0:
         print_header("The script requires root privileges to mount the image/device and write to it, "
@@ -180,27 +201,6 @@ if __name__ == "__main__":
     # import other scripts after python version check is successful
     import build
     import cli_input
-
-    # check if running the latest version fo the script
-    print_status("Checking if local script is up to date")
-    try:
-        if (not args.skip_commit_check and
-                bash("git rev-parse HEAD") != bash("git ls-remote origin HEAD").split("\t")[0]):
-            user_answer = input("\033[92m" + "You are not running the latest version of the script. Update now? (Y/n)"
-                                + "\033[0m").lower()
-            if user_answer.lower() in ["y", ""]:
-                print_status("Updating the script...")
-                bash("git pull")
-                print_status("Restarting the script...")
-                os.execl(sys.executable, sys.executable, *sys.argv)
-            print_error("Please update the script before continuing.")
-            print_status("If you are a developer, you can skip this check with the '--skip-commit-check' flag")
-            sys.exit(1)
-    except subprocess.CalledProcessError:
-        print_error("Failed to check if script is up to date.")
-        print_status("If you are a developer, you can skip this with the '--skip-commit-check' flag. "
-                     "If you are not a developer, check your internet connection and try again.")
-        sys.exit(1)
 
     # Check if running under crostini
     try:
