@@ -96,6 +96,8 @@ if __name__ == "__main__":
                 print_status("Updating the script...")
                 bash("git pull")
                 print_status("Restarting the script...")
+                # clear terminal, but keep any previous output so the user can scroll up to see it
+                print("\033[H\033[2J", end="")
                 os.execl(sys.executable, sys.executable, *sys.argv)
             print_error("Please update the script before continuing.")
             print_status("If you are a developer, you can skip this check with the '--skip-commit-check' flag")
