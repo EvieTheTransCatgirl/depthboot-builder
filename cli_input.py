@@ -19,7 +19,7 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
         "kernel_type": ""
     }
     # Print welcome message
-    print_header("Welcome to Depthboot, formerly known as Breath\n"
+    print_header("Welcome to Depthboot, formerly known as Breath!\n"
                  "This script will create a bootable Linux image.\n"
                  "You can press Ctrl+C at any time to stop the script.\n"
                  "Select the default options if you are unsure.")
