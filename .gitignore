@@ -1,6 +1,5 @@
 /.idea/
 depthboot.img
-depthboot.iso
 depthboot.bin
 kernel.flags
 /__pycache__/
