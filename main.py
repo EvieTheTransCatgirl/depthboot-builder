@@ -102,7 +102,7 @@ if __name__ == "__main__":
             sys.exit(1)
     except subprocess.CalledProcessError:
         print_error("Failed to check if script is up to date.")
-        print_status("If you are a developer, you can skip this with the '--skip-commit-check' flag. "
+        print_status("If you are a developer, you can skip this by setting the '--skip-commit-check' flag. "
                      "If you are not a developer, check your internet connection and try again.")
         sys.exit(1)
 
