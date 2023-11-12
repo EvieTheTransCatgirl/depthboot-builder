@@ -201,7 +201,7 @@ if __name__ == "__main__":
     except subprocess.CalledProcessError:
         print_error("Failed to check if script is up to date.")
         print_status("If you are a developer, you can skip this with the '--skip-commit-check' flag. "
-                     "If you are not a developer, you are doing something wrong")
+                     "If you are not a developer, check your internet connection and try again.")
         sys.exit(1)
 
     # Check if running under crostini
