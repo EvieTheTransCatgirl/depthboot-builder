@@ -12,7 +12,7 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
-1. Run ``git clone --depth=1 https://github.com/eupnea-linux/eupnea-builder; cd eupnea-builder; ./main.py``
+1. Run ``git clone --depth=1 https://github.com/eupnea-project/depthboot-builder; cd depthboot-builder; ./main.py``
 2. Select ... as distro
 3. Select ... as desktop environment
 4. ...
