@@ -90,7 +90,7 @@ if __name__ == "__main__":
     try:
         if (not args.skip_commit_check and
                 bash("git rev-parse HEAD") != bash("git ls-remote origin HEAD").split("\t")[0]):
-            user_answer = input("\033[92m" + "You are not running the latest version of the script. Update now? (Y/n)"
+            user_answer = input("\033[92m" + "You are not running the latest version of the script. Update now? (Y/n): "
                                 + "\033[0m").lower()
             if user_answer.lower() in ["y", ""]:
                 print_status("Updating the script...")
