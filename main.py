@@ -4,7 +4,6 @@
 import argparse
 import atexit
 import os
-import sys
 
 from functions import *
 

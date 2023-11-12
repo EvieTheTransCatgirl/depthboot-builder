@@ -3,7 +3,6 @@ import argparse
 import atexit
 import json
 import os
-from typing import Tuple
 from urllib.error import URLError
 
 from functions import *
@@ -51,7 +50,8 @@ def download_rootfs(distro_name: str, distro_version: str) -> None:
                 download_file("https://geo.mirror.pkgbuild.com/iso/latest/archlinux-bootstrap-x86_64.tar.gz",
                               "/tmp/depthboot-build/arch-rootfs.tar.gz")
             case "ubuntu" | "fedora":
-                print_status(f"Downloading {distro_name.capitalize()} rootfs, version {distro_version} from Eupnea GitHub releases")
+                print_status(f"Downloading {distro_name.capitalize()} rootfs, version {distro_version} from Eupnea "
+                             f"GitHub releases")
                 download_file(f"https://github.com/eupnea-project/{distro_name}-rootfs/releases/latest/download/"
                               f"{distro_name}-rootfs-{distro_version}.tar.xz",
                               f"/tmp/depthboot-build/{distro_name}-rootfs.tar.xz")
@@ -558,12 +558,12 @@ def start_build(build_options: dict, args: argparse.Namespace) -> None:
             actual_fs_in_bytes += 20971520  # add 20mb for linux to be able to boot properly
             bash(f"truncate --size={actual_fs_in_bytes} ./depthboot.img")
             print_header(f"The ready-to-boot {build_options['distro_name'].capitalize()} Depthboot image is located at "
-                             f"{get_full_path('.')}/depthboot.img")
+                         f"{get_full_path('.')}/depthboot.img")
         if product_name == "crosvm":
             # rename the image to .bin for the chromeos recovery utility to be able to flash it
             bash("mv ./depthboot.img ./depthboot.bin")
             print_header(f"The ready-to-boot {build_options['distro_name'].capitalize()} Depthboot image is located at "
-                                 f"{get_full_path('.')}/depthboot.bin")
+                         f"{get_full_path('.')}/depthboot.bin")
         bash(f"losetup -d {img_mnt}")  # unmount image from loop device
     else:
         print_header(f"USB/SD-card is ready to boot {build_options['distro_name'].capitalize()}")

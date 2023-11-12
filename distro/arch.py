@@ -1,5 +1,4 @@
 from functions import *
-from urllib.request import urlretrieve
 
 
 def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str) -> None:
