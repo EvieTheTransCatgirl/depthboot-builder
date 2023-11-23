@@ -22,10 +22,6 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
     # update apt
     print_status("Updating and upgrading all packages")
     chroot("apt-get update -y")
-    # TODO: Remove this once the iso is updated
-    # This file was updated in the remote package, but not on the iso. This results in apt prompting on what to do
-    # -> just copy over the new file from the package
-    cpfile("configs/pop-os/20apt-esm-hook.conf", "/mnt/depthboot/etc/apt/apt.conf.d/20apt-esm-hook.conf")
     chroot("apt-get upgrade -y")
     print_status("Installing eupnea packages")
     # Install eupnea packages
