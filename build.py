@@ -325,11 +325,6 @@ def post_extract(build_options) -> None:
         with open("/mnt/depthboot/etc/eupnea.json", "w") as settings_file:
             json.dump(settings, settings_file)
 
-        print_status("Fixing screen rotation")
-        # Install hwdb file to fix auto rotate being flipped on some devices
-        cpfile("configs/hwdb/61-sensor.hwdb", "/mnt/depthboot/etc/udev/hwdb.d/61-sensor.hwdb")
-        chroot("systemd-hwdb update")
-
         print_status("Cleaning /boot")
         rmdir("/mnt/depthboot/boot")  # clean stock kernels from /boot
 
