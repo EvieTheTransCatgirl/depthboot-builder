@@ -46,21 +46,26 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
 
     print_status("Installing zram, ignore dpkg errors")
     # Install zram
-    # The apt postinstall of this zram packages tries to modload zram which is not possible in a chroot -> ignore errors
-    with contextlib.suppress(subprocess.CalledProcessError):
+    if distro_version == "22.04":
+        # The jammy deb postinstall of this zram packages tries to modload zram which is not possible in a chroot
+        # -> ignore errors on jammy
+        with contextlib.suppress(subprocess.CalledProcessError):
+            chroot("apt-get install -y systemd-zram-generator")
+        # Edit the postinstall script to force success
+        with open("/mnt/depthboot/var/lib/dpkg/info/systemd-zram-generator.postinst", "r") as file:
+            config = file.read()
+        with open("/mnt/depthboot/var/lib/dpkg/info/systemd-zram-generator.postinst", "w") as file:
+            file.write("#!/bin/sh\nexit 0\n")
+        # Rerun dpkg configuration for package to be recognized as installed
+        # for some reason on some systems dpkg says that the package is already installed -> ignore it
+        with contextlib.suppress(subprocess.CalledProcessError):
+            chroot("dpkg --configure systemd-zram-generator")
+        # Restore original postinstall script
+        with open("/mnt/depthboot/var/lib/dpkg/info/systemd-zram-generator.postinst", "w") as file:
+            file.write(config)
+    else:
+        # if not on jammy, do not ignore errors from this command
         chroot("apt-get install -y systemd-zram-generator")
-    # Edit the postinstall script to force success
-    with open("/mnt/depthboot/var/lib/dpkg/info/systemd-zram-generator.postinst", "r") as file:
-        config = file.read()
-    with open("/mnt/depthboot/var/lib/dpkg/info/systemd-zram-generator.postinst", "w") as file:
-        file.write("#!/bin/sh\nexit 0\n")
-    # Rerun dpkg configuration for package to be recognized as installed
-    # for some reason on some systems dpkg says that the package is already installed -> ignore it
-    with contextlib.suppress(subprocess.CalledProcessError):
-        chroot("dpkg --configure systemd-zram-generator")
-    # Restore postinstall script
-    with open("/mnt/depthboot/var/lib/dpkg/info/systemd-zram-generator.postinst", "w") as file:
-        file.write(config)
 
     print_status("Downloading and installing de, might take a while")
     match de_name:
