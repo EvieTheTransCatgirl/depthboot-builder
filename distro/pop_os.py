@@ -11,14 +11,15 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
            "gettext gparted gparted-common grub-common grub2-common kpartx kpartx-boot libdistinst libdmraid1.0.0.rc16"
            " libinih1 libnss-mymachines localechooser-data os-prober pop-installer pop-installer-casper pop-shop-casper"
            " squashfs-tools systemd-container tcl-expect user-setup xfsprogs kernelstub efibootmgr")
-    # Add eupnea repo
-    mkdir("/mnt/depthboot/usr/local/share/keyrings", create_parents=True)
-    # download public key
-    urlretrieve("https://eupnea-project.github.io/deb-repo/public.key",
-                filename="/mnt/depthboot/usr/local/share/keyrings/eupnea.key")
-    with open("/mnt/depthboot/etc/apt/sources.list.d/eupnea.list", "w") as file:
-        file.write("deb [signed-by=/usr/local/share/keyrings/eupnea.key] https://eupnea-project.github.io/"
-                   "apt-repo/debian_ubuntu jammy main")
+
+    print_status("Installing eupnea repo package")
+    # Install eupnea repo package
+    urlretrieve(f"https://github.com/eupnea-project/deb-repo/releases/latest/download/eupnea-jammy-keyring.deb",
+                filename="/mnt/depthboot/tmp/keyring.deb")
+    chroot("apt-get install -y /tmp/keyring.deb")
+    # remove keyring package
+    rmfile("/mnt/depthboot/tmp/keyring.deb")
+
     # update apt
     print_status("Updating and upgrading all packages")
     chroot("apt-get update -y")

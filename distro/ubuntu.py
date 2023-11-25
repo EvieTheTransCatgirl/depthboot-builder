@@ -25,18 +25,18 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
         file.write(f"\ndeb http://archive.ubuntu.com/ubuntu {ubuntu_versions_codenames[distro_version]}-updates main "
                    f"restricted universe multiverse\n")
 
-    print_status("Installing dependencies")
-    # Add eupnea repo
-    mkdir("/mnt/depthboot/usr/local/share/keyrings", create_parents=True)
-    # download public key
-    urlretrieve("https://eupnea-project.github.io/deb-repo/public.key",
-                filename="/mnt/depthboot/usr/local/share/keyrings/eupnea.key")
-    with open("/mnt/depthboot/etc/apt/sources.list.d/eupnea.list", "w") as file:
-        file.write("deb [signed-by=/usr/local/share/keyrings/eupnea.key] https://eupnea-project.github.io/"
-                   f"apt-repo/debian_ubuntu {ubuntu_versions_codenames[distro_version]} main")
+    print_status("Installing eupnea repo package")
+    # Install eupnea repo package
+    urlretrieve(f"https://github.com/eupnea-project/deb-repo/releases/latest/download/eupnea-"
+                f"{ubuntu_versions_codenames[distro_version]}-keyring.deb", filename="/mnt/depthboot/tmp/keyring.deb")
+    chroot("apt-get install -y /tmp/keyring.deb")
+    # remove keyring package
+    rmfile("/mnt/depthboot/tmp/keyring.deb")
+
     # update apt
     chroot("apt-get update -y")
     chroot("apt-get upgrade -y")
+    print_status("Installing packages")
     # Install general dependencies + eupnea packages
     chroot("apt-get install -y linux-firmware network-manager software-properties-common nano eupnea-utils "
            "eupnea-system")
