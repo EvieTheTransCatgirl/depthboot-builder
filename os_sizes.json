@@ -33,14 +33,14 @@
     "cosmic-gnome": 7.4
   },
   "ubuntu_22.04": {
-    "budgie": 0.0,
-    "cinnamon": 0.0,
-    "cli": 0.0,
-    "deepin": 0.0,
-    "gnome": 0.0,
-    "kde": 0.0,
-    "lxqt": 0.0,
-    "xfce": 0.0
+    "budgie": 5.6,
+    "cinnamon": 7.1,
+    "cli": 3.8,
+    "deepin": 7.2,
+    "gnome": 5.5,
+    "kde": 5.5,
+    "lxqt": 4.7,
+    "xfce": 5.2
   },
   "ubuntu_23.10": {
     "budgie": 5.5,
@@ -52,5 +52,5 @@
     "lxqt": 6.3,
     "xfce": 5.3
   },
-  "ubuntu_average": 1.8
+  "ubuntu_average": 3.6
 }
