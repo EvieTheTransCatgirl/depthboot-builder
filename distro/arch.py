@@ -27,7 +27,7 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
     urlretrieve("https://eupnea-project.github.io/pkg-repo/public_key.gpg", filename="/mnt/depthboot/tmp/eupnea.key")
     # arch-chroot clears /tmp, so we hae to use normal chroot
     bash("chroot /mnt/depthboot bash -c 'pacman-key --add /tmp/eupnea.key'")
-    chroot("pacman-key --lsign-key 94EB01F3608D3940CE0F2A6D69E3E84DF85C8A12")
+    chroot("pacman-key --lsign-key 4F8A31EAADF1588D0B45A0DAAC87331A20A7250A")
     # add repo to pacman.conf
     with open("/mnt/depthboot/etc/pacman.conf", "a") as file:
         file.write("[eupnea]\nServer = https://eupnea-project.github.io/pkg-repo/repodata/$arch\n")
