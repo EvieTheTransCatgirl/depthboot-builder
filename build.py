@@ -403,15 +403,8 @@ def post_config(distro_name: str, verbose_kernel: bool, kernel_type: str, is_usb
          "--signprivate /usr/share/vboot/devkeys/kernel_data_key.vbprivk --bootloader kernel.flags "
          f"--config kernel.flags --vmlinuz {kernel_path} --pack /tmp/depthboot-build/bzImage.signed")
 
-    # Flash kernel
-    if is_usb:
-        # if writing to usb, then no p in partition name
-        bash(f"dd if=/tmp/depthboot-build/bzImage.signed of={img_mnt}1")
-        bash(f"dd if=/tmp/depthboot-build/bzImage.signed of={img_mnt}2")  # Backup kernel
-    else:
-        # image is a loop device -> needs p in part name
-        bash(f"dd if=/tmp/depthboot-build/bzImage.signed of={img_mnt}p1")
-        bash(f"dd if=/tmp/depthboot-build/bzImage.signed of={img_mnt}p2")  # Backup kernel
+    # if image is a loop device, add a p in the partition name
+    bash(f"dd if=/tmp/depthboot-build/bzImage.signed of={img_mnt}{'1' if is_usb else 'p1'}")
 
     # Fedora requires all files to be relabled for SELinux to work
     # If this is not done, SELinux will prevent users from logging in
