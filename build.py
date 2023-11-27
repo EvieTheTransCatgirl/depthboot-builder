@@ -140,8 +140,11 @@ def partition(write_usb: bool) -> None:
                        "GitHub/Discord/Revolt")
         sys.exit(1)
     bash(f"parted -s -a optimal {img_mnt} unit mib mkpart Kernel 1 65")  # kernel partition
-    bash(f"parted -s -a optimal {img_mnt} unit mib mkpart Kernel 65 129")  # reserve kernel partition
-    bash(f"parted -s -a optimal {img_mnt} unit mib mkpart Root 129 100%")  # rootfs partition
+    # this partition is not necessary, but all the depthboot scripts were written with it in mind
+    # -> it's easier to keep it for now
+    # it also reserves 500mb for the kexec bootloader in the future
+    bash(f"parted -s -a optimal {img_mnt} unit mib mkpart Kernel 65 500")
+    bash(f"parted -s -a optimal {img_mnt} unit mib mkpart Root 500 100%")  # rootfs partition
     bash(f"cgpt add -i 1 -t kernel -S 1 -T 5 -P 15 {img_mnt}")  # set kernel flags
     bash(f"cgpt add -i 2 -t kernel -S 1 -T 5 -P 1 {img_mnt}")  # set backup kernel flags
 
