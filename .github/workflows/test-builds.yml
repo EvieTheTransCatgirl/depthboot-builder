@@ -148,7 +148,7 @@ jobs:
       - name: Copy testing script to root
         run: cp ./.github/scripts/build-image.py ./build-image.py
 
-      - name: Testing Fedora builds
+      - name: Testing Debian builds
         run: sudo python3 ./build-image.py debian stable ${{ matrix.de_name }}
 
       - name: Uploading result as artifact
