@@ -1,40 +1,47 @@
-import contextlib
 from functions import *
-from urllib.request import urlretrieve
 
 
-def config(de_name: str, distro_version: str, verbose: bool) -> None:
+def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str) -> None:
     set_verbose(verbose)
     print_status("Configuring Debian")
 
-    print_status("Installing dependencies")
-    # install apt-add-repository
-    chroot("apt-get update -y")
-    chroot("apt-get install -y software-properties-common")
-    # add non-free repos
-    chroot("add-apt-repository -y non-free")
-    # Add eupnea repo
-    mkdir("/mnt/depthboot/usr/local/share/keyrings", create_parents=True)
-    # download public key
-    urlretrieve("https://eupnea-linux.github.io/apt-repo/public.key",
-                filename="/mnt/depthboot/usr/local/share/keyrings/eupnea.key")
-    with open("/mnt/depthboot/etc/apt/sources.list.d/eupnea.list", "w") as file:
-        file.write("deb [signed-by=/usr/local/share/keyrings/eupnea.key] https://eupnea-linux.github.io/"
-                   "apt-repo/debian_ubuntu kinetic main")
+    # add missing apt sources
+    with open("/mnt/depthboot/etc/apt/sources.list", "a") as file:
+        file.write(f"\ndeb http://security.debian.org/debian-security {distro_version}-security main non-free-firmware "
+                   f"non-free\n")
+        file.write(f"\ndeb http://deb.debian.org/debian/ {distro_version}-updates main non-free-firmware non-free\n")
+
+    print_status("Installing eupnea repo package")
+    urlretrieve(f"https://github.com/eupnea-project/deb-repo/releases/latest/download/eupnea-{distro_version}-"
+                f"keyring.deb", filename="/mnt/depthboot/tmp/keyring.deb")
+    chroot("apt-get install -y /tmp/keyring.deb")
+    # remove keyring package
+    rmfile("/mnt/depthboot/tmp/keyring.deb")
+
     # update apt
     chroot("apt-get update -y")
     chroot("apt-get upgrade -y")
     # Install general dependencies + eupnea packages
+    print_status("Installing dependencies")
     chroot("apt-get install -y network-manager sudo firmware-linux-free firmware-linux-nonfree "
            "firmware-iwlwifi iw")
     chroot("apt-get install -y eupnea-utils eupnea-system")
 
+    # Install kernel
+    chroot(f"apt-get install -y eupnea-{kernel_version}-kernel")
+
+    # Install zram
+    chroot("apt-get install -y systemd-zram-generator")
+    # Add zram config
+    cpfile("configs/zram/zram-generator.conf", "/mnt/depthboot/etc/systemd/zram-generator.conf")
+
     print_status("Downloading and installing de, might take a while")
     # DEBIAN_FRONTEND=noninteractive skips locale setup questions
+    # package names taken from https://www.debian.org/doc/manuals/debian-reference/ch07.en.html
     match de_name:
         case "gnome":
             print_status("Installing GNOME")
-            chroot("DEBIAN_FRONTEND=noninteractive apt-get install -y gnome/stable gnome-initial-setup")
+            chroot("DEBIAN_FRONTEND=noninteractive apt-get install -y task-gnome-desktop")
         case "kde":
             print_status("Installing KDE")
             chroot("DEBIAN_FRONTEND=noninteractive apt-get install -y task-kde-desktop")
@@ -50,9 +57,12 @@ def config(de_name: str, distro_version: str, verbose: bool) -> None:
             exit(1)
         case "budgie":
             print_status("Installing Budgie")
-            chroot("DEBIAN_FRONTEND=noninteractive apt-get install -y budgie-desktop budgie-indicator-applet "
-                   "budgie-core lightdm lightdm-gtk-greeter gnome-terminal epiphany-browser gnome-software")
+            chroot("DEBIAN_FRONTEND=noninteractive apt-get -y --install-suggests budgie-desktop lightdm "
+                   "lightdm-gtk-greeter epiphany-browser gnome-software")
             chroot("systemctl enable lightdm.service")
+        case "cinnamon":
+            print_status("Installing Cinnamon")
+            chroot("DEBIAN_FRONTEND=noninteractive apt-get install -y task-cinnamon-desktop")
         case "cli":
             print_status("Skipping desktop environment install")
         case _:
@@ -66,10 +76,12 @@ def config(de_name: str, distro_version: str, verbose: bool) -> None:
         print_status("Upgrading touchpad drivers")
         chroot("apt-get remove -y xserver-xorg-input-synaptics")
         chroot("apt-get install -y xserver-xorg-input-libinput")
+        print_status("Installing keyd")
+        chroot("apt-get install -y keyd")
 
     # GDM3 auto installs gnome-minimal. Remove it if user didn't choose gnome
     if de_name != "gnome":
-        rmfile("/mnt/depthboot/usr/share/xsessions/ubuntu.desktop")
+        # rmfile("/mnt/depthboot/usr/share/xsessions/debian.desktop")
         chroot("apt-get remove -y gnome-shell")
         chroot("apt-get autoremove -y")
 
@@ -78,33 +90,4 @@ def config(de_name: str, distro_version: str, verbose: bool) -> None:
         cpfile("/mnt/depthboot/usr/share/doc/util-linux/examples/securetty", "/mnt/depthboot/etc/securetty")
     print_status("Desktop environment setup complete")
 
-    # TODO: Pre-update python3 to 3.10 on stable
-    # Pre-updating to python3.10 breaks the gnome first time installer...
-    '''
-    # Pre-update python to 3.10 as some postinstall scripts require it
-    print_status("Upgrading python to 3.10")
-    # switch to unstable channel
-    with open("/mnt/depthboot/etc/apt/sources.list", "r") as file:
-        original_sources = file.readlines()
-    sources = original_sources
-    sources[0] = sources[0].replace("stable", "unstable")
-    with open("/mnt/depthboot/etc/apt/sources.list", "w") as file:
-        file.writelines(sources)
-    # update and install python
-    print_status("Installing python 3.10")
-    chroot("apt-get update -y")
-    chroot("apt-get install -y python3")
-    print_status("Python 3.10 installed")
-    # revert to stable channel
-    with open("/mnt/depthboot/etc/apt/sources.list", "w") as file:
-        file.writelines(original_sources)
-    chroot("apt-get update -y")
-    '''
     print_status("Debian setup complete")
-
-
-def chroot(command: str) -> None:
-    if verbose:
-        bash(f'chroot /mnt/depthboot /bin/bash -c "{command}"')
-    else:
-        bash(f'chroot /mnt/depthboot /bin/bash -c "{command}" 2>/dev/null 1>/dev/null')  # supress all output
