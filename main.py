@@ -154,6 +154,13 @@ if __name__ == "__main__":
                 bash("zypper --non-interactive refresh")  # sync repos
                 bash("zypper --non-interactive install vboot parted pv xz")  # cgpt is included in vboot-utils on fedora
             elif distro.lower().__contains__("fedora"):
+                if distro.lower().__contains__("silverblue"):
+                    print_error("Silverblue requires a reboot to install the required packages. Containers will only "
+                                "work if started in privileged mode. Consider using a virtual machine instead.")
+                    if input("Proceed to installing packages into overlay? (y/N): ").lower() == "y":
+                        bash("rpm-ostree install vboot-utils parted pv xz")
+                        print_warning("Please reboot to apply packages")
+                    sys.exit(1)  # exit as either the user needs to reboot or user chose not to install packages
                 bash("dnf update --refresh -y")  # sync repos
                 bash("dnf install -y vboot-utils parted pv xz")  # cgpt is included in vboot-utils on fedora
             else:
@@ -314,6 +321,14 @@ if __name__ == "__main__":
                 bash("zypper --non-interactive refresh")  # sync repos
                 bash("zypper --non-interactive install squashfs-tools")
             elif distro.lower().__contains__("fedora"):
+                # Check if running on silverblue
+                if distro.lower().__contains__("silverblue"):
+                    print_error("Silverblue requires a reboot to install the required packages. Containers will only "
+                                "work if started in privileged mode. Consider using a virtual machine instead.")
+                    if input("Proceed to installing packages into overlay? (y/N): ").lower() == "y":
+                        bash("rpm-ostree install squashfs-tools")
+                        print_warning("Please reboot to apply packages")
+                    sys.exit(1)  # exit as either the user needs to reboot or user chose not to install packages
                 bash("dnf update -y")  # sync repos
                 bash("dnf install -y squashfs-tools")
             else:
