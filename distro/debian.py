@@ -5,11 +5,8 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
     set_verbose(verbose)
     print_status("Configuring Debian")
 
-    # add missing apt sources
-    with open("/mnt/depthboot/etc/apt/sources.list", "a") as file:
-        file.write(f"\ndeb http://security.debian.org/debian-security {distro_version}-security main non-free-firmware "
-                   f"non-free\n")
-        file.write(f"\ndeb http://deb.debian.org/debian/ {distro_version}-updates main non-free-firmware non-free\n")
+    # Copy over sources.list (the bootstrap one doesn't have all the stock debian repos)
+    cpfile("configs/debian-sources.list", "/mnt/depthboot/etc/apt/sources.list")
 
     print_status("Installing eupnea repo package")
     urlretrieve(f"https://github.com/eupnea-project/deb-repo/releases/latest/download/eupnea-{distro_version}-"
