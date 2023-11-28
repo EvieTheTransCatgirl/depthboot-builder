@@ -31,13 +31,11 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
 
     while True:
         distro_name = ia_selection("Which Linux distribution (flavor) would you like to use?",
-                                   options=["Fedora", "Debian", "Ubuntu", "Pop!_OS", "Arch",
-                                            "Generic ISO"],
+                                   options=["Fedora", "Debian", "Ubuntu", "Pop!_OS", "Arch", "Generic ISO"],
                                    flags=[f"~{os_sizes['fedora_average']}GB (recommended)",
                                           f"{os_sizes['debian_stable']['cli']}GB",
                                           f"~{os_sizes['ubuntu_average']}GB",
                                           f"{os_sizes['pop-os_22.04']['cosmic-gnome']}GB",
-                                          f"{os_sizes['ubuntu_22.04']['cinnamon']}GB",
                                           f"{os_sizes['arch_latest']['cli']}GB",
                                           "(NOT recommended)"])
         skip_de_selection = False
