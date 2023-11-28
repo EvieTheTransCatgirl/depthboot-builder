@@ -49,15 +49,15 @@ def download_rootfs(distro_name: str, distro_version: str) -> None:
                 print_status("Downloading latest Arch Linux rootfs from geo.mirror.pkgbuild.com")
                 download_file("https://geo.mirror.pkgbuild.com/iso/latest/archlinux-bootstrap-x86_64.tar.gz",
                               "/tmp/depthboot-build/arch-rootfs.tar.gz")
-            case "ubuntu" | "fedora":
-                print_status(f"Downloading {distro_name.capitalize()} rootfs, version {distro_version} from Eupnea "
-                             f"GitHub releases")
-                download_file(f"https://github.com/eupnea-project/{distro_name}-rootfs/releases/latest/download/"
+            case "ubuntu" | "fedora" | "debian":
+                print_status(f"Downloading {distro_name.capitalize()} rootfs, version {distro_version} from "
+                             f"distro-rootfs releases")
+                download_file(f"https://github.com/eupnea-project/distro-rootfs/releases/latest/download/"
                               f"{distro_name}-rootfs-{distro_version}.tar.xz",
                               f"/tmp/depthboot-build/{distro_name}-rootfs.tar.xz")
             case "pop-os":
                 print_status("Downloading Pop!_OS rootfs from Eupnea GitHub")
-                download_file("https://github.com/eupnea-project/pop-os-rootfs/releases/latest/download/pop-os-rootfs-"
+                download_file("https://github.com/eupnea-project/distro-rootfs/releases/latest/download/pop-os-rootfs-"
                               "22.04.split.aa", "/tmp/depthboot-build/pop-os-rootfs.split.aa")
                 # print_status("Downloading pop-os rootfs from eupnea GitHub releases, part 2/2")
                 # download_file("https://github.com/eupnea-project/pop-os-rootfs/releases/latest/download/pop-os-rootfs"
@@ -167,7 +167,7 @@ def extract_rootfs(distro_name: str, distro_version: str) -> None:
             mkdir("/tmp/depthboot-build/arch-rootfs")
             extract_file("/tmp/depthboot-build/arch-rootfs.tar.gz", "/tmp/depthboot-build/arch-rootfs")
             cpdir("/tmp/depthboot-build/arch-rootfs/root.x86_64/", "/mnt/depthboot/")
-        case "pop-os" | "ubuntu" | "fedora":
+        case "pop-os" | "ubuntu" | "fedora" | "debian":
             print_status(f"Extracting {distro_name.capitalize()} rootfs")
             extract_file(f"/tmp/depthboot-build/{distro_name}-rootfs.tar.xz", "/mnt/depthboot")
         case "generic":
