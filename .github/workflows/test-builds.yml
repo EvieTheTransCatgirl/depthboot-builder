@@ -122,6 +122,43 @@ jobs:
           path: |
             *_results.txt
 
+  test-debian:
+    strategy:
+      matrix:
+        de_name: [ "gnome", "kde", "xfce", "lxqt", "budgie", "cinnamon", "cli" ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Maximizing build space
+        uses: easimon/maximize-build-space@master
+        with:
+          temp-reserve-mb: 11264
+          swap-size-mb: 1
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+
+      - name: Checking out repository code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Installing dependencies
+        run: sudo apt-get update && sudo apt-get install -y cgpt vboot-kernel-utils parted
+
+      - name: Copy testing script to root
+        run: cp ./.github/scripts/build-image.py ./build-image.py
+
+      - name: Testing Fedora builds
+        run: sudo python3 ./build-image.py debian stable ${{ matrix.de_name }}
+
+      - name: Uploading result as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: results_debian_stable_${{ matrix.de_name }}
+          retention-days: 1
+          path: |
+            *_results.txt
+
   test-pop-os:
     runs-on: ubuntu-latest
     steps:
@@ -148,7 +185,7 @@ jobs:
             *_results.txt
 
   evaluate-results:
-    needs: [ test-ubuntu, test-arch, test-fedora, test-pop-os ]
+    needs: [ test-ubuntu, test-arch, test-fedora, test-pop-os, test-debian ]
     runs-on: ubuntu-latest
     steps:
       - name: Checking out repository code
