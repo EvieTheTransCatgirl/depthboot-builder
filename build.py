@@ -492,6 +492,8 @@ def start_build(build_options: dict, args: argparse.Namespace) -> None:
     match build_options["distro_name"]:
         case "ubuntu":
             import distro.ubuntu as distro
+        case "debian":
+            import distro.debian as distro
         case "arch":
             import distro.arch as distro
         case "fedora":
