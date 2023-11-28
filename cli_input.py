@@ -31,9 +31,10 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
 
     while True:
         distro_name = ia_selection("Which Linux distribution (flavor) would you like to use?",
-                                   options=["Fedora", "Ubuntu", "Pop!_OS", "Linux Mint (Cinnamon edition)", "Arch",
+                                   options=["Fedora", "Debian", "Ubuntu", "Pop!_OS", "Arch",
                                             "Generic ISO"],
                                    flags=[f"~{os_sizes['fedora_average']}GB (recommended)",
+                                          f"{os_sizes['debian_stable']['cli']}GB",
                                           f"~{os_sizes['ubuntu_average']}GB",
                                           f"{os_sizes['pop-os_22.04']['cosmic-gnome']}GB",
                                           f"{os_sizes['ubuntu_22.04']['cinnamon']}GB",
@@ -48,16 +49,9 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
                         f"{os_sizes['ubuntu_23.10']['cli']}GB (latest, recommended)",
                         f"{os_sizes['ubuntu_22.04']['cli']}GB (LTS version)"])
                 break
-            case "Linux Mint (Cinnamon edition)":
-                output_dict["distro_name"] = "ubuntu"
-                output_dict["distro_version"] = "22.04"
-                output_dict["de_name"] = "cinnamon"
-                print_warning("This option does *NOT* actually install Linux Mint. Instead it will install Ubuntu "
-                              "22.04 (which is what Linux Mint is based on) with the Cinnamon desktop environment.")
-                user_selection = ia_selection("Are you sure you want to continue?", options=["No", "Yes"], )
-                if user_selection == "Yes":
-                    skip_de_selection = True
-                    break
+            case "Debian":
+                output_dict["distro_name"] = "debian"
+                output_dict["distro_version"] = "stable"
             case "Arch":
                 output_dict["distro_name"] = "arch"
                 output_dict["distro_version"] = "latest"
@@ -126,13 +120,16 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
                 # de_list.extend(["deepin", "budgie"])
                 de_list.append("budgie")
                 flags_list.append(f"+{os_sizes[temp_distro_name]['budgie']}GB")
+            case "debian":
+                de_list.append("budgie")
+                flags_list.append(f"+{os_sizes[temp_distro_name]['budgie']}GB")
             case "fedora":
                 de_list.extend(["deepin", "budgie"])
                 flags_list.append(f"+{os_sizes[temp_distro_name]['deepin']}GB")
                 flags_list.append(f"+{os_sizes[temp_distro_name]['budgie']}GB")
 
         de_list.append("cli")  # add at the end for better ux
-        flags_list.append(f"+0GB")
+        flags_list.append(f"+0GB")  # cli doesn't need additional space
 
         while True:
             desktop_env = ia_selection("Which desktop environment (Desktop GUI) would you like to use?",
