@@ -50,6 +50,7 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
             case "Debian":
                 output_dict["distro_name"] = "debian"
                 output_dict["distro_version"] = "stable"
+                break
             case "Arch":
                 output_dict["distro_name"] = "arch"
                 output_dict["distro_version"] = "latest"
