@@ -22,6 +22,7 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
     print_status("Installing dependencies")
     chroot("apt-get install -y network-manager sudo firmware-linux-free firmware-linux-nonfree "
            "firmware-iwlwifi iw")
+    chroot("apt-get update -y")
     chroot("apt-get install -y eupnea-utils eupnea-system")
 
     # Install kernel
