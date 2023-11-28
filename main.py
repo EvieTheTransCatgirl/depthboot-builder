@@ -206,8 +206,10 @@ if __name__ == "__main__":
 
                 bash("apt-get update -y")  # update cache back to stable channel
 
-                print_header('Please restart the script with: "./main.py"')
-                sys.exit(0)
+                print_status("Restarting the script...")
+                # clear terminal, but keep any previous output so the user can scroll up to see it
+                print("\033[H\033[2J", end="")
+                os.execl(sys.executable, sys.executable, *sys.argv)
         print_error("Please run the script with python 3.10 or higher")
         sys.exit(1)
     # import other scripts after python version check is successful
@@ -228,7 +230,7 @@ if __name__ == "__main__":
         except subprocess.CalledProcessError:
             print_error("Failed to prepare Crostini")
             print_error("Please run the Crostini specific instructions before running this script")
-            print("https://eupnea-project.github.io/docs/extra/crostini")
+            print("https://eupnea-project.github.io/docs/extra/crostini#instructions")
             sys.exit(1)
 
     # clear terminal, but keep any previous output so the user can scroll up to see it
