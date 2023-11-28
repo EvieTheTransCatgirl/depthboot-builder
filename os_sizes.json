@@ -8,6 +8,15 @@
     "lxqt": -1.6,
     "xfce": 4.2
   },
+  "debian_stable": {
+    "budgie": 0.0,
+    "cinnamon": 0.0,
+    "cli": 0.0,
+    "gnome": 0.0,
+    "kde": 0.0,
+    "lxqt": 0.0,
+    "xfce": 0.0
+  },
   "fedora_39": {
     "budgie": 2.9,
     "cinnamon": 7.3,
@@ -30,7 +39,7 @@
   },
   "fedora_average": 3.1,
   "pop-os_22.04": {
-    "cosmic-gnome": 9.2
+    "cosmic-gnome": 9.1
   },
   "ubuntu_22.04": {
     "budgie": 5.6,
@@ -45,12 +54,12 @@
   "ubuntu_23.10": {
     "budgie": 5.4,
     "cinnamon": 6.9,
-    "cli": 3.3,
-    "deepin": -1.6,
-    "gnome": 5.7,
+    "cli": 3.4,
+    "deepin": -1.7,
+    "gnome": 5.6,
     "kde": 5.3,
     "lxqt": 6.5,
     "xfce": 5.4
   },
-  "ubuntu_average": 3.5
+  "ubuntu_average": 3.6
 }
