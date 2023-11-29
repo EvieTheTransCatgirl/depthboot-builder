@@ -22,7 +22,7 @@
     "cinnamon": 7.3,
     "cli": 3.0,
     "deepin": 6.2,
-    "gnome": 6.9,
+    "gnome": 6.7,
     "kde": 6.1,
     "lxqt": 5.5,
     "xfce": 4.9
@@ -34,7 +34,7 @@
     "deepin": -1.6,
     "gnome": 6.9,
     "kde": 6.3,
-    "lxqt": 6.1,
+    "lxqt": 5.9,
     "xfce": 5.1
   },
   "fedora_average": 3.1,
@@ -45,7 +45,7 @@
     "budgie": 5.6,
     "cinnamon": 7.0,
     "cli": 3.8,
-    "deepin": -1.9,
+    "deepin": 7.2,
     "gnome": 5.5,
     "kde": 5.5,
     "lxqt": 4.7,
