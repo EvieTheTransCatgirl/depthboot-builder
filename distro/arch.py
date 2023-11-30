@@ -1,5 +1,10 @@
 from functions import *
 
+# --needed: only install packages that are not already installed
+# --disable-download-timeout: disable download timeout, as it often triggers, even when downloading
+# via a stable connection from GitHub
+pacman_command = "pacman -S --noconfirm --disable-download-timeout"
+
 
 def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str) -> None:
     set_verbose(verbose)
@@ -30,27 +35,26 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
     # add repo to pacman.conf
     with open("/mnt/depthboot/etc/pacman.conf", "a") as file:
         file.write("[eupnea]\nServer = https://eupnea-project.github.io/pkg-repo/repodata/$arch\n")
-    chroot("pacman -Syyu --noconfirm")  # update the whole system
+    chroot(f"{pacman_command} -yyu")  # update the whole system
 
     print_status("Installing packages")
-    # Install basic utils
-    chroot(
-        "pacman -S --noconfirm --needed base base-devel nano networkmanager xkeyboard-config linux-firmware sudo bluez "
-        "bluez-utils python3 cgpt-vboot-utils zram-generator")
+    # Install basic utils. Do not reinstall if already installed
+    chroot(f"{pacman_command} --needed base base-devel nano networkmanager xkeyboard-config linux-firmware sudo bluez "
+           f"bluez-utils python3 cgpt-vboot-utils zram-generator")
     # install eupnea packages after installing python3
-    chroot("pacman -S --noconfirm eupnea-utils eupnea-system")
+    chroot(f"{pacman_command} eupnea-utils eupnea-system")
     # Install kernel
-    chroot(f"pacman -S --noconfirm eupnea-{kernel_version}-kernel")
+    chroot(f"{pacman_command} eupnea-{kernel_version}-kernel")
 
     print_status("Downloading and installing de, might take a while")
     match de_name:
         case "gnome":
             print_status("Installing GNOME")
-            chroot("pacman -S --noconfirm gnome gnome-extra")
+            chroot(f"{pacman_command} gnome gnome-extra")
             chroot("systemctl enable gdm.service")
         case "kde":
             print_status("Installing KDE")
-            chroot("pacman -S --noconfirm plasma-meta plasma-wayland-session kde-system-meta kde-utilities-meta "
+            chroot(f"{pacman_command} plasma-meta plasma-wayland-session kde-system-meta kde-utilities-meta "
                    "packagekit-qt5 firefox")
             chroot("systemctl enable sddm.service")
             # Set default kde sddm theme
@@ -61,36 +65,36 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
             print_status("Installing Xfce")
             # xfce doesn't have its own audio settings and therefore needs pavucontrol
             # xfce does not have any audio servers as dependencies -> manually install pipewire
-            chroot("pacman -S --noconfirm xfce4 xfce4-goodies xorg xorg-server lightdm lightdm-gtk-greeter network-"
-                   "manager-applet nm-connection-editor xfce4-pulseaudio-plugin pavucontrol pipewire gnome-software "
-                   "firefox wireplumber")
+            chroot(f"{pacman_command} xfce4 xfce4-goodies xorg xorg-server lightdm lightdm-gtk-greeter "
+                   f"network-manager-applet nm-connection-editor xfce4-pulseaudio-plugin pavucontrol pipewire "
+                   f"gnome-software firefox wireplumber")
             chroot("systemctl enable lightdm.service")
         case "lxqt":
             print_status("Installing LXQt")
-            chroot("pacman -S --noconfirm lxqt breeze-icons xorg xorg-server sddm firefox networkmanager-qt "
-                   "network-manager-applet nm-connection-editor discover packagekit-qt5")
+            chroot(f"{pacman_command} lxqt breeze-icons xorg xorg-server sddm firefox networkmanager-qt "
+                   f"network-manager-applet nm-connection-editor discover packagekit-qt5")
             chroot("systemctl enable sddm.service")
         case "deepin":
             print_status("Installing deepin")
-            chroot("pacman -S --noconfirm deepin deepin-kwin deepin-extra xorg xorg-server lightdm kde-applications "
-                   "firefox discover packagekit-qt5")
+            chroot(f"{pacman_command} deepin deepin-kwin deepin-extra xorg xorg-server lightdm kde-applications firefox"
+                   f" discover packagekit-qt5")
             # enable deepin specific login style
             with open("/mnt/depthboot/etc/lightdm/lightdm.conf", "a") as conf:
                 conf.write("greeter-session=lightdm-deepin-greeter")
             chroot("systemctl enable lightdm.service")
         case "budgie":
             print_status("Installing Budgie")
-            chroot("pacman -S --noconfirm lightdm lightdm-gtk-greeter budgie-desktop budgie-desktop-view "
-                   "budgie-screensaver budgie-control-center xorg xorg-server network-manager-applet gnome-terminal"
-                   " firefox gnome-software nemo")
+            chroot(f"{pacman_command} lightdm lightdm-gtk-greeter budgie-desktop budgie-desktop-view budgie-screensaver"
+                   f" budgie-control-center xorg xorg-server network-manager-applet gnome-terminal firefox "
+                   f"gnome-software nemo")
             chroot("systemctl enable lightdm.service")
             # remove broken gnome xsessions
             chroot("rm /usr/share/xsessions/gnome.desktop")
             chroot("rm /usr/share/xsessions/gnome-xorg.desktop")
         case "cinnamon":
             print_status("Installing Cinnamon")
-            chroot("pacman -S --noconfirm cinnamon cinnamon-translations lightdm lightdm-gtk-greeter xed xreader "
-                   "gnome-terminal system-config-printer gnome-keyring blueberry")
+            chroot(f"{pacman_command} cinnamon cinnamon-translations lightdm lightdm-gtk-greeter xed xreader "
+                   f"gnome-terminal system-config-printer gnome-keyring blueberry")
             chroot("systemctl enable lightdm.service")
             chroot("systemctl enable NetworkManager.service")
         case "cli":
@@ -101,7 +105,7 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
 
     if de_name != "cli":
         print_status("Installing auto-rotate service, keyd")
-        chroot("pacman -S --noconfirm iio-sensor-proxy keyd")
+        chroot(f"{pacman_command} iio-sensor-proxy keyd")
 
     print_status("Desktop environment setup complete")
 
