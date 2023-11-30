@@ -104,8 +104,8 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
         de_list = ["Gnome", "KDE", "Xfce", "LXQt", "Cinnamon"]
         flags_list = [f"(recommended) +{os_sizes[temp_distro_name]['gnome']}GB",
                       f"(recommended) +{os_sizes[temp_distro_name]['kde']}GB",
-                      f"(recommended for weak devices) +{os_sizes[temp_distro_name]['xfce']}GB",
-                      f"(recommended for weak devices) +{os_sizes[temp_distro_name]['lxqt']}GB",
+                      f"(recommended for slow devices) +{os_sizes[temp_distro_name]['xfce']}GB",
+                      f"(recommended for slow devices) +{os_sizes[temp_distro_name]['lxqt']}GB",
                       f"+{os_sizes[temp_distro_name]['cinnamon']}GB"]
         match output_dict["distro_name"]:
             case "ubuntu":
