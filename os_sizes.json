@@ -1,7 +1,7 @@
 {
   "arch_latest": {
-    "budgie": -1.6,
-    "cinnamon": -1.6,
+    "budgie": 4.9,
+    "cinnamon": 2.4,
     "cli": 3.2,
     "gnome": 5.6,
     "kde": 5.2,
