@@ -8,7 +8,7 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
     # Uncomment worldwide arch mirror
     with open("/mnt/depthboot/etc/pacman.d/mirrorlist", "r") as read:
         mirrors = read.readlines()
-    # Uncomment first worldwide mirror
+    # Uncomment first mirror
     mirrors[6] = mirrors[6][1:]
     with open("/mnt/depthboot/etc/pacman.d/mirrorlist", "w") as write:
         write.writelines(mirrors)
@@ -59,8 +59,7 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
                 conf.write("[Theme]\nCurrent=breeze")
         case "xfce":
             print_status("Installing Xfce")
-            # no wayland support in xfce
-            # xfce doesn't have proper audio settings and uses pavucontrol instead
+            # xfce doesn't have its own audio settings and therefore needs pavucontrol
             # xfce does not have any audio servers as dependencies -> manually install pipewire
             chroot("pacman -S --noconfirm xfce4 xfce4-goodies xorg xorg-server lightdm lightdm-gtk-greeter network-"
                    "manager-applet nm-connection-editor xfce4-pulseaudio-plugin pavucontrol pipewire gnome-software "
@@ -128,10 +127,10 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
         conf.writelines(temp_pacman)
 
     # Kill the gpg-agent processes, as they prevent the image from being unmounted later
-    # Find the pids of the correct gpg-agent processes
     gpg_pids = []
     for line in bash("ps aux").split("\n"):
         if "gpg-agent --homedir /etc/pacman.d/gnupg --use-standard-socket --daemon" in line:
+            # Find the pids of the correct gpg-agent processes
             temp_string = line[line.find(" "):].strip()
             gpg_pids.append(temp_string[:temp_string.find(" ")])
 
