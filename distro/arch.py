@@ -71,8 +71,8 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
             chroot("systemctl enable lightdm.service")
         case "lxqt":
             print_status("Installing LXQt")
-            chroot(f"{pacman_command} lxqt breeze-icons xorg xorg-server sddm firefox networkmanager-qt "
-                   f"network-manager-applet nm-connection-editor discover packagekit-qt5")
+            chroot(f"{pacman_command} lxqt breeze-icons xorg xorg-server sddm firefox network-manager-applet "
+                   f"nm-connection-editor discover packagekit-qt5")
             chroot("systemctl enable sddm.service")
         case "deepin":
             print_status("Installing deepin")
