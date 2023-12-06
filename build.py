@@ -437,19 +437,19 @@ def post_config(distro_name: str, verbose_kernel: bool, kernel_type: str, is_usb
         cpfile("/mnt/depthboot/usr/sbin/fixfiles.bak", "/mnt/depthboot/usr/sbin/fixfiles")
         rmfile("/mnt/depthboot/usr/sbin/fixfiles.bak")
 
+    # Clean all temporary files from image/sd-card to reduce its size
+    rmdir("/mnt/depthboot/tmp")
+    # rmdir("/mnt/depthboot/var/tmp")
+    # rmdir("/mnt/depthboot/var/cache")
+    # rmdir("/mnt/depthboot/proc")
+    # rmdir("/mnt/depthboot/run")
+    # rmdir("/mnt/depthboot/sys")
+    # rmdir("/mnt/depthboot/lost+found")
+    # rmdir("/mnt/depthboot/dev")
+
     # Unmount everything
     with contextlib.suppress(subprocess.CalledProcessError):  # will throw errors for unmounted paths
         bash("umount -lR /mnt/depthboot")  # recursive unmount
-
-    # Clean all temporary files from image/sd-card to reduce its size
-    rmdir("/mnt/depthboot/tmp")
-    rmdir("/mnt/depthboot/var/tmp")
-    rmdir("/mnt/depthboot/var/cache")
-    rmdir("/mnt/depthboot/proc")
-    rmdir("/mnt/depthboot/run")
-    rmdir("/mnt/depthboot/sys")
-    rmdir("/mnt/depthboot/lost+found")
-    rmdir("/mnt/depthboot/dev")
 
 
 # the main build function
