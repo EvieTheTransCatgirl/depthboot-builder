@@ -52,16 +52,6 @@ if __name__ == "__main__":
         print_error(str(e))
         print_error(f"Failed to build {args.distro_name} + {args.distro_version} + {args.de_name}")
         image_size = 0
-    except SystemExit:
-        print_error(f"Unexpected error, retrying: {args.distro_name} + {args.distro_version} + {args.de_name}")
-        try:
-            build.start_build(build_options=testing_dict, args=build_args)
-            # calculate shrunk image size in gb and round it to 2 decimal places
-            image_size = round(Path("./depthboot.img").stat().st_size / 1073741824, 1)
-        except (Exception, SystemExit) as e:
-            print_error(str(e))
-            print_error(f"Failed twice to build {args.distro_name} + {args.distro_version} + {args.de_name}")
-            image_size = 0
 
     with open(f"{args.distro_name}_{args.distro_version}_{args.de_name}_results.txt", "w") as f:
         f.write(str(image_size))
