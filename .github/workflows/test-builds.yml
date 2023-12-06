@@ -50,7 +50,7 @@ jobs:
   test-arch:
     strategy:
       matrix:
-        de_name: [ "gnome", "kde", "xfce", "lxqt", "budgie", "cinnamon", "cli" ]  # deepin
+        de_name: [ "gnome", "kde", "xfce", "lxqt", "budgie", "deepin", "cinnamon", "cli" ]
     runs-on: ubuntu-latest
     steps:
       - name: Maximizing build space
