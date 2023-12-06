@@ -26,16 +26,16 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
         conf.writelines(temp_pacman)
 
     print_status("Preparing pacman")
-    chroot("pacman-key --init")
-    chroot("pacman-key --populate archlinux")
-    # Add eupnea repo to pacman.conf
+    chroot("pacman-key --init")  # create local master key
+    chroot("pacman-key --populate archlinux")  # add archlinux keys
+    # add eupnea key
     urlretrieve("https://eupnea-project.github.io/pkg-repo/public_key.gpg", filename="/mnt/depthboot/tmp/eupnea.key")
     chroot("pacman-key --add /tmp/eupnea.key")
     chroot("pacman-key --lsign-key 4F8A31EAADF1588D0B45A0DAAC87331A20A7250A")
     # add repo to pacman.conf
     with open("/mnt/depthboot/etc/pacman.conf", "a") as file:
         file.write("[eupnea]\nServer = https://eupnea-project.github.io/pkg-repo/repodata/$arch\n")
-    chroot(f"{pacman_command} -yyu")  # update the whole system
+    chroot(f"{pacman_command} -yyu")  # refresh all repos update the whole system
 
     print_status("Installing packages")
     # Install basic utils. Do not reinstall if already installed
