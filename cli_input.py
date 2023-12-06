@@ -115,9 +115,8 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
                 de_list.append("budgie")
                 flags_list.append(f"+{os_sizes[temp_distro_name]['budgie']}GB")
             case "arch":
-                # Deepin is currently broken on arch
-                # de_list.extend(["deepin", "budgie"])
-                de_list.append("budgie")
+                de_list.extend(["deepin", "budgie"])
+                flags_list.append(f"+{os_sizes[temp_distro_name]['deepin']}GB")
                 flags_list.append(f"+{os_sizes[temp_distro_name]['budgie']}GB")
             case "debian":
                 de_list.append("budgie")
