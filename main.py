@@ -73,7 +73,6 @@ def exit_handler():
 
 if __name__ == "__main__":
     print_error("Please do not use this script at the moment. It is currently in maintainance mode.")
-    sys.exit(1)
 
     # override sys.exit to catch exit codes
     hooks = ExitHooks()
