@@ -55,7 +55,7 @@ def config(de_name: str, distro_version: str, verbose: bool, kernel_version: str
             exit(1)
         case "budgie":
             print_status("Installing Budgie")
-            chroot("DEBIAN_FRONTEND=noninteractive apt-get -y --install-suggests budgie-desktop lightdm "
+            chroot("DEBIAN_FRONTEND=noninteractive apt-get -y --install-suggests install budgie-desktop lightdm "
                    "lightdm-gtk-greeter epiphany-browser gnome-software")
             chroot("systemctl enable lightdm.service")
         case "cinnamon":
