@@ -1,13 +1,13 @@
 {
   "arch_latest": {
-    "budgie": 4.8,
+    "budgie": 4.9,
     "cinnamon": 2.4,
     "cli": 3.2,
     "deepin": -1.6,
     "gnome": 5.6,
-    "kde": 5.2,
+    "kde": 5.3,
     "lxqt": 4.6,
-    "xfce": 4.2
+    "xfce": 4.4
   },
   "debian_stable": {
     "budgie": -1.2,
@@ -23,22 +23,22 @@
     "cinnamon": 7.3,
     "cli": 3.0,
     "deepin": 6.2,
-    "gnome": 6.8,
+    "gnome": 6.7,
     "kde": 6.1,
     "lxqt": 5.5,
     "xfce": 4.9
   },
   "fedora_40": {
-    "budgie": 3.3,
+    "budgie": 3.4,
     "cinnamon": 7.4,
-    "cli": 3.4,
-    "deepin": -1.7,
+    "cli": 3.3,
+    "deepin": -1.6,
     "gnome": 6.9,
-    "kde": 6.3,
+    "kde": 6.2,
     "lxqt": 5.8,
-    "xfce": 5.0
+    "xfce": 5.1
   },
-  "fedora_average": 3.2,
+  "fedora_average": 3.1,
   "pop-os_22.04": {
     "cosmic-gnome": 9.5
   },
