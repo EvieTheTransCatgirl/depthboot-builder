@@ -96,7 +96,6 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
                 output_dict["distro_version"] = "generic"
                 output_dict["de_name"] = "generic"
                 break
-    print(f"{output_dict['distro_name']} {output_dict['distro_version']} selected")
 
     temp_distro_name = f'{output_dict["distro_name"]}_{output_dict["distro_version"]}'
 
@@ -146,7 +145,6 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
 
             output_dict["de_name"] = desktop_env.lower()
             break
-        print(f"{desktop_env} selected")
     elif output_dict["distro_name"] == "pop-os":
         output_dict["de_name"] = "cosmic-gnome"
 
@@ -159,7 +157,6 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
 
         output_dict["kernel_type"] = kernel_type.lower()
         break
-    print(f"{kernel_type} kernel selected")
 
     print_question("Enter a username for the new user")
     while True:
@@ -175,7 +172,6 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
                 found_invalid_char = True
                 break
         if not found_invalid_char:
-            print(f"Using {output_dict['username']} as username")
             break
 
     print_question("Please set a secure password")
@@ -189,7 +185,6 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
             passwd_temp_repeat = getpass("\033[94m" + "Repeat password: " + "\033[0m")
             if passwd_temp == passwd_temp_repeat:
                 output_dict["password"] = passwd_temp
-                print("Password set")
                 break
             else:
                 print_warning("Passwords do not match, please try again")
