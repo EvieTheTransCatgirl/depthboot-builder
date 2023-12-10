@@ -109,19 +109,19 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
         match output_dict["distro_name"]:
             case "ubuntu":
                 if output_dict["distro_version"] == "22.04":
-                    de_list.append("deepin")
+                    de_list.append("Deepin")
                     flags_list.append(f"+{os_sizes[temp_distro_name]['deepin']}GB")
-                de_list.append("budgie")
+                de_list.append("Budgie")
                 flags_list.append(f"+{os_sizes[temp_distro_name]['budgie']}GB")
             case "arch":
-                de_list.extend(["deepin", "budgie"])
+                de_list.extend(["Deepin", "Budgie"])
                 flags_list.append(f"+{os_sizes[temp_distro_name]['deepin']}GB")
                 flags_list.append(f"+{os_sizes[temp_distro_name]['budgie']}GB")
             case "debian":
-                de_list.append("budgie")
+                de_list.append("Budgie")
                 flags_list.append(f"+{os_sizes[temp_distro_name]['budgie']}GB")
             case "fedora":
-                de_list.extend(["deepin", "budgie"])
+                de_list.extend(["Deepin", "Budgie"])
                 flags_list.append(f"+{os_sizes[temp_distro_name]['deepin']}GB")
                 flags_list.append(f"+{os_sizes[temp_distro_name]['budgie']}GB")
 
