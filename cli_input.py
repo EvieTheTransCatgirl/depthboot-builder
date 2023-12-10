@@ -150,6 +150,17 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
     elif output_dict["distro_name"] == "pop-os":
         output_dict["de_name"] = "cosmic-gnome"
 
+    while True:
+        kernel_type = ia_selection("Which kernel type would you like to use? \nYou can change kernels "
+                                   "post-install by installing the eupnea-chromeos-kernel or eupnea-mainline-kernel "
+                                   "package with your package manager.",
+                                   options=["Mainline", "ChromeOS"],
+                                   flags=["(default, recommended)"])
+
+        output_dict["kernel_type"] = kernel_type.lower()
+        break
+    print(f"{kernel_type} kernel selected")
+
     print_question("Enter a username for the new user")
     while True:
         output_dict["username"] = input("\033[94m" + "Username (default: 'localuser'): " + "\033[0m")
@@ -183,17 +194,6 @@ def get_user_input(verbose_kernel: bool, skip_device: bool = False) -> dict:
             else:
                 print_warning("Passwords do not match, please try again")
                 continue
-
-    while True:
-        kernel_type = ia_selection("Which kernel type would you like to use? Usually there is no need to "
-                                   "change this. \nYou can change kernels in the future by using your package "
-                                   "manager (eupnea-kernelname-kernel).",
-                                   options=["ChromeOS", "Mainline"],
-                                   flags=["(default, recommended for older devices)", "(newer kernel, recommended)"])
-
-        output_dict["kernel_type"] = kernel_type.lower()
-        break
-    print(f"{kernel_type} kernel selected")
 
     # Check if usb reading is possible
     if not path_exists("/sys/dev/block"):
