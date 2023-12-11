@@ -35,6 +35,8 @@ def process_args():
     parser.add_argument("--dev", dest="dev_build", action="store_true", help="Use latest dev build. May be unstable.")
     parser.add_argument("--skip-commit-check", dest="skip_commit_check", action="store_true",
                         help="Do not check if local commit hash matches remote commit hash")
+    parser.add_argument("--skip-arch-check", dest="skip_arch_check", action="store_true",
+                        help="Do not check the architecture of the builder system")
     return parser.parse_args()
 
 
@@ -119,6 +121,13 @@ if __name__ == "__main__":
     # but some chroot distros expect them to be set
     if not os.environ.get("PATH").__contains__("/usr/sbin"):
         os.environ["PATH"] += ":/usr/sbin"
+
+    print_status("Checking if running on x86_64")
+    if not bash("uname -m") == "x86_64" and not args.skip_arch_check:
+        print_error("Building is only supported on x86_64 systems at the moment. Please use a translation layer or a "
+                    "virtual machine if you want to build from another architecture")
+        print_status("If you are a developer, you can skip this by setting the '--skip-arch-check' flag.")
+        sys.exit(1)
 
     # check script dependencies are already installed with which
     if not args.no_deps_check:
