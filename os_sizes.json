@@ -6,8 +6,8 @@
     "deepin": -1.6,
     "gnome": 5.6,
     "kde": 5.3,
-    "lxqt": 4.6,
-    "xfce": 4.4
+    "lxqt": 4.7,
+    "xfce": 4.5
   },
   "debian_stable": {
     "budgie": -1.2,
@@ -30,7 +30,7 @@
   },
   "fedora_40": {
     "budgie": 3.4,
-    "cinnamon": 7.3,
+    "cinnamon": 7.4,
     "cli": 3.3,
     "deepin": -1.6,
     "gnome": 6.9,
@@ -40,7 +40,7 @@
   },
   "fedora_average": 3.1,
   "pop-os_22.04": {
-    "cosmic-gnome": 9.5
+    "cosmic-gnome": 9.6
   },
   "ubuntu_22.04": {
     "budgie": 5.6,
