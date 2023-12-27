@@ -1,13 +1,13 @@
 {
   "arch_latest": {
-    "budgie": 4.9,
-    "cinnamon": 2.5,
-    "cli": 3.2,
+    "budgie": 4.8,
+    "cinnamon": 2.4,
+    "cli": 3.3,
     "deepin": -1.6,
     "gnome": 5.7,
-    "kde": 5.3,
+    "kde": 5.2,
     "lxqt": 4.7,
-    "xfce": 4.5
+    "xfce": 4.4
   },
   "debian_stable": {
     "budgie": -1.2,
