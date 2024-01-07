@@ -29,11 +29,11 @@
     "xfce": 4.9
   },
   "fedora_40": {
-    "budgie": 3.4,
+    "budgie": 3.6,
     "cinnamon": 7.4,
     "cli": 3.3,
     "deepin": -1.6,
-    "gnome": 6.9,
+    "gnome": 6.8,
     "kde": 6.2,
     "lxqt": 5.8,
     "xfce": 5.1
