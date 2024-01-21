@@ -19,10 +19,10 @@
     "xfce": 5.5
   },
   "fedora_39": {
-    "budgie": 2.9,
+    "budgie": 3.2,
     "cinnamon": 7.3,
     "cli": 3.0,
-    "deepin": 6.3,
+    "deepin": 6.5,
     "gnome": 6.8,
     "kde": 6.1,
     "lxqt": 5.5,
