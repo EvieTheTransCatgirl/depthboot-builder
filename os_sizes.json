@@ -33,10 +33,10 @@
     "cinnamon": 7.4,
     "cli": 3.3,
     "deepin": -1.6,
-    "gnome": 6.9,
+    "gnome": 6.8,
     "kde": 6.2,
     "lxqt": 5.8,
-    "xfce": 5.1
+    "xfce": 5.2
   },
   "fedora_average": 3.1,
   "pop-os_22.04": {
